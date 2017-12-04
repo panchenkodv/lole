@@ -33,7 +33,7 @@ class UserController extends Controller
                 $status = $this->ansiFormat('Success!', Console::FG_GREEN);
                 $username = $this->ansiFormat($username, Console::FG_GREEN);
                 $password = $this->ansiFormat($password, Console::FG_GREEN);
-                $this->stderr("    > {$status} User with name {$username} and password {$password} created!" . PHP_EOL);
+                $this->stdout("    > {$status} User with name {$username} and password {$password} created!" . PHP_EOL);
                 exit(Controller::EXIT_CODE_NORMAL);
             } elseif ($user->hasErrors()) {
                 $messages = $user->getFirstErrors();
