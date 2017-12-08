@@ -37,14 +37,36 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
+        'i18n' => [
+            'translations' => [
+                '*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@backend/messages',
+                    'sourceLanguage' => 'ru',
+                ],
+            ],
+        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '' => 'site/index',
+                [
+                    'pattern' => '<_a:(login|logout)>',
+                    'route' => '<_c>/<_a>',
+                    'defaults' => [
+                        '_c' => 'site',
+                    ]
+                ],
+                [
+                    'pattern' => '<_c:[\w-]+>/<_a:[\w-]+>',
+                    'route' => '<_c>/<_a>',
+                    'defaults' => [
+                        '_a' => 'index'
+                    ]
+                ]
             ],
         ],
-        */
     ],
     'params' => $params,
 ];
