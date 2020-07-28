@@ -38,7 +38,7 @@ class Customer extends ActiveRecord
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
+            TimestampBehavior::class,
         ];
     }
 
@@ -79,7 +79,7 @@ class Customer extends ActiveRecord
      */
     public function getCustomerEmails()
     {
-        return $this->hasMany(CustomerEmail::className(), ['customer_id' => 'id'])->inverseOf('customer');
+        return $this->hasMany(CustomerEmail::class, ['customer_id' => 'id'])->inverseOf('customer');
     }
 
     /**
@@ -87,7 +87,7 @@ class Customer extends ActiveRecord
      */
     public function getCustomerPhones()
     {
-        return $this->hasMany(CustomerPhone::className(), ['customer_id' => 'id'])->inverseOf('customer');
+        return $this->hasMany(CustomerPhone::class, ['customer_id' => 'id'])->inverseOf('customer');
     }
 
     /**
@@ -95,6 +95,6 @@ class Customer extends ActiveRecord
      */
     public function getOrders()
     {
-        return $this->hasMany(Order::className(), ['customer_id' => 'id'])->inverseOf('customer');
+        return $this->hasMany(Order::class, ['customer_id' => 'id'])->inverseOf('customer');
     }
 }

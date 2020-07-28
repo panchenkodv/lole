@@ -3,8 +3,8 @@
 namespace common\models;
 
 use Yii;
-use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\Json;
 
 /**
  * This is the model class for table "boxes".
@@ -17,28 +17,21 @@ use yii\db\ActiveRecord;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ * @property string[] $aPhotos
  *
  * @property BoxGroup[] $boxGroups
  * @property OrderBox[] $orderBoxes
  */
 class Box extends ActiveRecord
 {
+    public $aPhotos = [];
+
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
         return 'boxes';
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::className(),
-        ];
     }
 
     /**
@@ -76,7 +69,7 @@ class Box extends ActiveRecord
      */
     public function getBoxGroups()
     {
-        return $this->hasMany(BoxGroup::className(), ['box_id' => 'id'])->inverseOf('box');
+        return $this->hasMany(BoxGroup::class, ['box_id' => 'id'])->inverseOf('box');
     }
 
     /**
@@ -84,6 +77,24 @@ class Box extends ActiveRecord
      */
     public function getOrderBoxes()
     {
-        return $this->hasMany(OrderBox::className(), ['box_id' => 'id'])->inverseOf('box');
+        return $this->hasMany(OrderBox::class, ['box_id' => 'id'])->inverseOf('box');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        $this->photos = Json::encode($this->aPhotos);
+        return parent::beforeSave($insert);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function afterFind()
+    {
+        $this->aPhotos = $this->photos === null ? [] : Json::decode($this->photos);
+        parent::afterFind();
     }
 }

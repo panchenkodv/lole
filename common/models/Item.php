@@ -38,7 +38,7 @@ class Item extends ActiveRecord
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
+            TimestampBehavior::class,
         ];
     }
 
@@ -78,7 +78,7 @@ class Item extends ActiveRecord
      */
     public function getOrderBoxItems()
     {
-        return $this->hasMany(OrderBoxItem::className(), ['item_id' => 'id'])->inverseOf('item');
+        return $this->hasMany(OrderBoxItem::class, ['item_id' => 'id'])->inverseOf('item');
     }
 
     /**
@@ -86,7 +86,7 @@ class Item extends ActiveRecord
      */
     public function getOrderBoxes()
     {
-        return $this->hasMany(OrderBox::className(), ['id' => 'order_box_id'])
+        return $this->hasMany(OrderBox::class, ['id' => 'order_box_id'])
             ->viaTable('order_box_items', ['item_id' => 'id']);
     }
 }

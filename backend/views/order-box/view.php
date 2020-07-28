@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Box */
+/* @var $model backend\models\OrderBox */
 
-$this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Boxes'), 'url' => ['index']];
+$this->title = $model->id;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Order Boxes'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="box-view">
+<div class="order-box-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -29,11 +29,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'name',
-            'description',
-            'photos',
+            'order_id',
+            'box_id',
             'price',
-            'status',
             'created_at',
             'updated_at',
         ],

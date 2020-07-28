@@ -35,7 +35,7 @@ class OrderBoxItem extends ActiveRecord
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
+            TimestampBehavior::class,
         ];
     }
 
@@ -53,13 +53,13 @@ class OrderBoxItem extends ActiveRecord
                 ['item_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Item::className(),
+                'targetClass' => Item::class,
                 'targetAttribute' => ['item_id' => 'id']
             ],
             [
                 ['order_box_id'],
                 'exist', 'skipOnError' => true,
-                'targetClass' => OrderBox::className(),
+                'targetClass' => OrderBox::class,
                 'targetAttribute' => ['order_box_id' => 'id']
             ],
         ];
@@ -85,7 +85,7 @@ class OrderBoxItem extends ActiveRecord
      */
     public function getItem()
     {
-        return $this->hasOne(Item::className(), ['id' => 'item_id'])->inverseOf('orderBoxItems');
+        return $this->hasOne(Item::class, ['id' => 'item_id'])->inverseOf('orderBoxItems');
     }
 
     /**
@@ -93,6 +93,6 @@ class OrderBoxItem extends ActiveRecord
      */
     public function getOrderBox()
     {
-        return $this->hasOne(OrderBox::className(), ['id' => 'order_box_id'])->inverseOf('orderBoxItem');
+        return $this->hasOne(OrderBox::class, ['id' => 'order_box_id'])->inverseOf('orderBoxItem');
     }
 }

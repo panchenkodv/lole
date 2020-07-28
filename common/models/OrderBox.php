@@ -37,7 +37,7 @@ class OrderBox extends ActiveRecord
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
+            TimestampBehavior::class,
         ];
     }
 
@@ -55,14 +55,14 @@ class OrderBox extends ActiveRecord
                 ['box_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Box::className(),
+                'targetClass' => Box::class,
                 'targetAttribute' => ['box_id' => 'id']
             ],
             [
                 ['order_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Order::className(),
+                'targetClass' => Order::class,
                 'targetAttribute' => ['order_id' => 'id']
             ],
         ];
@@ -88,7 +88,7 @@ class OrderBox extends ActiveRecord
      */
     public function getOrderBoxItems()
     {
-        return $this->hasOne(OrderBoxItem::className(), ['order_box_id' => 'id'])->inverseOf('orderBox');
+        return $this->hasOne(OrderBoxItem::class, ['order_box_id' => 'id'])->inverseOf('orderBox');
     }
 
     /**
@@ -96,7 +96,7 @@ class OrderBox extends ActiveRecord
      */
     public function getItems()
     {
-        return $this->hasMany(Item::className(), ['id' => 'item_id'])
+        return $this->hasMany(Item::class, ['id' => 'item_id'])
             ->viaTable('order_box_items', ['order_box_id' => 'id']);
     }
 
@@ -105,7 +105,7 @@ class OrderBox extends ActiveRecord
      */
     public function getBox()
     {
-        return $this->hasOne(Box::className(), ['id' => 'box_id'])->inverseOf('orderBoxes');
+        return $this->hasOne(Box::class, ['id' => 'box_id'])->inverseOf('orderBoxes');
     }
 
     /**
@@ -113,6 +113,6 @@ class OrderBox extends ActiveRecord
      */
     public function getOrder()
     {
-        return $this->hasOne(Order::className(), ['id' => 'order_id'])->inverseOf('orderBoxes');
+        return $this->hasOne(Order::class, ['id' => 'order_id'])->inverseOf('orderBoxes');
     }
 }

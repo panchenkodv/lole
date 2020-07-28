@@ -3,18 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Box;
-use yii\base\InvalidCallException;
+use backend\models\OrderBox;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
 
 /**
- * BoxController implements the CRUD actions for Box model.
+ * OrderBoxController implements the CRUD actions for OrderBox model.
  */
-class BoxController extends Controller
+class OrderBoxController extends Controller
 {
     /**
      * @inheritdoc
@@ -32,13 +30,13 @@ class BoxController extends Controller
     }
 
     /**
-     * Lists all Box models.
+     * Lists all OrderBox models.
      * @return mixed
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Box::find(),
+            'query' => OrderBox::find(),
         ]);
 
         return $this->render('index', [
@@ -47,8 +45,8 @@ class BoxController extends Controller
     }
 
     /**
-     * Displays a single Box model.
-     * @param integer $id
+     * Displays a single OrderBox model.
+     * @param string $id
      * @return mixed
      */
     public function actionView($id)
@@ -59,21 +57,15 @@ class BoxController extends Controller
     }
 
     /**
-     * Creates a new Box model.
+     * Creates a new OrderBox model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Box();
+        $model = new OrderBox();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $boxPhotos = Yii::$app->getSession()->get('photos')['boxes'] ?? null;
-            if ($boxPhotos !== null) {
-                foreach ($boxPhotos as $boxPhoto) {
-                    $model->addPhoto($boxPhoto);
-                }
-            }
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -83,9 +75,9 @@ class BoxController extends Controller
     }
 
     /**
-     * Updates an existing Box model.
+     * Updates an existing OrderBox model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+     * @param string $id
      * @return mixed
      */
     public function actionUpdate($id)
@@ -102,9 +94,9 @@ class BoxController extends Controller
     }
 
     /**
-     * Deletes an existing Box model.
+     * Deletes an existing OrderBox model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param string $id
      * @return mixed
      */
     public function actionDelete($id)
@@ -114,39 +106,16 @@ class BoxController extends Controller
         return $this->redirect(['index']);
     }
 
-    public function actionAddPhoto($id = null)
-    {
-        if (!\Yii::$app->request->isAjax) {
-            throw new InvalidCallException(Yii::t('backend', 'Этот запрос возможен только через ajax!'));
-        }
-
-        $photo = UploadedFile::getInstanceByName('Box[photos]');
-        if ($photo !== null) {
-            if ($id === null) {
-                $sessionPhotos = Yii::$app->getSession()->get('photos', []);
-                $sessionPhotos['boxes'][] = $photo;
-                Yii::$app->getSession()->set('photos', $sessionPhotos);
-                return true;
-            }
-
-            $model = $this->findModel($id);
-
-            return $model->addPhoto($photo);
-        }
-
-        return false;
-    }
-
     /**
-     * Finds the Box model based on its primary key value.
+     * Finds the OrderBox model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Box the loaded model
+     * @param string $id
+     * @return OrderBox the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Box::findOne($id)) !== null) {
+        if (($model = OrderBox::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

@@ -38,7 +38,7 @@ class CustomerPhone extends ActiveRecord
                 ['customer_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Customer::className(),
+                'targetClass' => Customer::class,
                 'targetAttribute' => ['customer_id' => 'id']
             ],
         ];
@@ -61,6 +61,6 @@ class CustomerPhone extends ActiveRecord
      */
     public function getCustomer()
     {
-        return $this->hasOne(Customer::className(), ['id' => 'customer_id'])->inverseOf('customerPhones');
+        return $this->hasOne(Customer::class, ['id' => 'customer_id'])->inverseOf('customerPhones');
     }
 }

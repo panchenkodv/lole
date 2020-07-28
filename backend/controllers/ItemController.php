@@ -7,7 +7,6 @@ use backend\models\Item;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * ItemController implements the CRUD actions for Item model.
